@@ -377,8 +377,7 @@ public class Control extends JPanel implements Screen {
 			} else if (nameEnter) {
 				nameEnter = false;
 				highScores = true;
-				ScoreInfo.setScores(score, pName, Window.FOLDER_PATH
-						+ GameInfo.NAME);
+				ScoreInfo.setScores(score, pName, GameInfo.TXT_FILE);
 			} else if (highScores) {
 
 				highScores = false;
