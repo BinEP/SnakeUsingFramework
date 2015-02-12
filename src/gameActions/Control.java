@@ -18,7 +18,7 @@ import utilityClasses.*;
 import gameFolder.*;
 
 public class Control extends JPanel implements Screen {
-	
+
 	/**
 	 * When start screen is showing Paint checks this variable for whether or
 	 * not draw the start screen
@@ -110,7 +110,7 @@ public class Control extends JPanel implements Screen {
 	 * player y position
 	 */
 	public int playerY;
-	
+
 	public Timer timer;
 	public int origSpeed = movementVar;
 	public double speed = origSpeed;
@@ -120,6 +120,9 @@ public class Control extends JPanel implements Screen {
 
 	public double startTime;
 	public double totalTime = 0;
+
+	public String fontFile = GameInfo.FONT_FILE;
+	public CustomFont customFont = new CustomFont(fontFile, Font.BOLD, 18);
 
 	public UserGame sub = (UserGame) this;
 
@@ -583,6 +586,24 @@ public class Control extends JPanel implements Screen {
 		// TODO Auto-generated method stub
 		// deltaX = 0;
 		rightPressed = false;
+	}
+
+	/**
+	 * Sets the graphics font at the given size
+	 * 
+	 * @param g
+	 * @param size
+	 */
+	public Font getFont(int size) {
+
+		return customFont.getFont(size);
+
+	}
+
+	public Font getFont() {
+
+		return customFont.getFont();
+
 	}
 
 }

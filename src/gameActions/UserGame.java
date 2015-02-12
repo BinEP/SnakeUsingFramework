@@ -88,7 +88,9 @@ public class UserGame extends Directions implements PlayerInterface {
 			r.draw(g);
 		}
 
-		g.drawString(String.valueOf(score), 5, 15);
+		g.setFont(getFont(40));
+		
+		CenteredText.draw(String.valueOf(score), 450, g);
 
 	}
 
