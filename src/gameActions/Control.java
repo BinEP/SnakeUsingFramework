@@ -600,10 +600,5 @@ public class Control extends JPanel implements Screen {
 
 	}
 
-	public Font getFont() {
-
-		return customFont.getFont();
-
-	}
 
 }

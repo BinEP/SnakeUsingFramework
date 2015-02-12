@@ -43,7 +43,7 @@ public class UserGame extends Directions implements PlayerInterface {
 	public ArrayList<CustomRectangle> snakeBody = new ArrayList<CustomRectangle>();
 	public ArrayList<CustomRectangle> fruits = new ArrayList<CustomRectangle>();
 	public Rectangle outerbox = new Rectangle(0, 0, 499, 477);
-	public Rectangle boundary = new Rectangle(8, 8, 486, 462);
+	public Rectangle boundary = new Rectangle(18, 18, 466, 452);
 	public int initialBodySize = 4;
 	public int numOfFruits = 4;
 
@@ -87,10 +87,8 @@ public class UserGame extends Directions implements PlayerInterface {
 
 			r.draw(g);
 		}
-
-		g.setFont(getFont(40));
-		
-		CenteredText.draw(String.valueOf(score), 450, g);
+		g.setColor(Color.WHITE);
+		CenteredText.draw(String.valueOf(score), 450, g, 40);
 
 	}
 
