@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Games" default="build" basedir=".">
 	<target name="build">
-		<jar jarfile="dist/Play Games.jar" basedir="bin">
+		<jar jarfile="dist/Snake.jar" basedir="bin">
 			<manifest>
-				<attribute name="Main-Class" value="Chooser" />
+				<attribute name="Main-Class" value="Runner" />
 			</manifest>
 		</jar>
 	</target>
 
 	<target name="bundle" depends="build">
-		<bundleapp outputdirectory="dist" name="Play Games"
-			displayname="Play Games" identifier="stoffel.PlayGames"
+		<bundleapp outputdirectory="dist" name="Play Snake"
+			displayname="Play Snake" identifier="stoffel.PlaySnake"
 			icon="Infofiles/AppIcon.png"
-			mainclassname="Chooser">
-			<classpath file="dist/Play Games.jar" />
+			mainclassname="Runner">
+			<classpath file="dist/Snake.jar" />
 		</bundleapp>
 		<exec executable="open">
 			<arg value="./dist" />
