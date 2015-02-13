@@ -27,6 +27,8 @@ public class UserGame extends Directions implements PlayerInterface {
 	 * 
 	 * boolean startGame boolean playing boolean endGame boolean nameEnter
 	 * boolean highScores
+	 * 
+	 * boolean singleDirection only executes one direction per frame
 	 */
 
 	/*
@@ -37,6 +39,8 @@ public class UserGame extends Directions implements PlayerInterface {
 	 * downReleased() rightReleased() leftReleased()
 	 */
 
+	
+	
 	public CustomRectangle head;
 	public Color[] Colors = { Color.CYAN, Color.RED, Color.GREEN, Color.YELLOW,
 			Color.ORANGE, Color.WHITE };
@@ -50,7 +54,6 @@ public class UserGame extends Directions implements PlayerInterface {
 	public UserGame() {
 
 		super();
-
 	}
 
 	/**
@@ -98,7 +101,7 @@ public class UserGame extends Directions implements PlayerInterface {
 	 * 
 	 */
 	public void moves() {
-
+		
 		head.x += deltaX;
 		head.y += deltaY;
 
@@ -210,6 +213,8 @@ public class UserGame extends Directions implements PlayerInterface {
 			deltaY = -movementVar;
 
 		}
+		
+//		addDirection(Direction.up);
 
 	}
 
@@ -223,6 +228,7 @@ public class UserGame extends Directions implements PlayerInterface {
 			deltaY = movementVar;
 
 		}
+//		addDirection(Direction.down);
 	}
 
 	@Override
@@ -235,6 +241,7 @@ public class UserGame extends Directions implements PlayerInterface {
 			deltaX = -movementVar;
 
 		}
+//		addDirection(Direction.left);
 
 	}
 
@@ -247,6 +254,7 @@ public class UserGame extends Directions implements PlayerInterface {
 			deltaX = movementVar;
 
 		}
+//		addDirection(Direction.right);
 
 	}
 

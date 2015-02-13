@@ -79,6 +79,16 @@ public class Control extends JPanel implements Screen {
 	public boolean rightPressed = false;
 
 	/**
+	 * Set to true if only one direction per frame
+	 */
+	public boolean singleDirection = true;
+
+	public enum Direction {
+
+		up, down, left, right;
+	}
+
+	/**
 	 * keyMap - modify this to change key locations Gets modified when on the
 	 * start screen and keys are pressed Assigned in order of when pressed then
 	 * the key are mapped when the game starts
@@ -120,6 +130,8 @@ public class Control extends JPanel implements Screen {
 
 	public double startTime;
 	public double totalTime = 0;
+
+	public ArrayList<Direction> nextDirection = new ArrayList<Direction>();
 
 	public String fontFile = GameInfo.FONT_FILE;
 	public CustomFont customFont = new CustomFont(fontFile, Font.BOLD, 18);
@@ -337,19 +349,35 @@ public class Control extends JPanel implements Screen {
 
 		} else if (e.getKeyCode() == upKey) {
 
-			sub.up();
+			if (singleDirection) {
+				addDirection(Direction.up);
+			} else {
+				sub.up();
+			}
 
 		} else if (e.getKeyCode() == downKey) {
 
-			sub.down();
+			if (singleDirection) {
+				addDirection(Direction.down);
+			} else {
+				sub.down();
+			}
 
 		} else if (e.getKeyCode() == leftKey) {
 
-			sub.left();
+			if (singleDirection) {
+				addDirection(Direction.left);
+			} else {
+				sub.left();
+			}
 
 		} else if (e.getKeyCode() == rightKey) {
 
-			sub.right();
+			if (singleDirection) {
+				addDirection(Direction.right);
+			} else {
+				sub.right();
+			}
 
 		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
@@ -451,6 +479,9 @@ public class Control extends JPanel implements Screen {
 
 		if (playing) {
 
+			if (nextDirection.size() > 0 && singleDirection)
+				executeDirection();
+			
 			// if (upPressed) up();
 			// if (downPressed) down();
 			// if (leftPressed) left();
@@ -599,5 +630,49 @@ public class Control extends JPanel implements Screen {
 
 	}
 
+	/**
+	 * Adds the direction to a list of directions to be executed.
+	 * 
+	 * @param d
+	 */
+	public void addDirection(Direction d) {
+
+		nextDirection.add(d);
+
+		// lastDirection = d;
+
+	}
+
+	/**
+	 * Executes the direction passed into the method
+	 */
+	public void executeDirection() {
+
+		Direction d = nextDirection.get(0);
+		nextDirection.remove(0);
+
+		switch (d) {
+
+		case up:
+
+			sub.up();
+
+			break;
+		case down:
+			sub.down();
+
+			break;
+		case left:
+
+			sub.left();
+
+			break;
+		case right:
+
+			sub.right();
+
+		}
+
+	}
 
 }

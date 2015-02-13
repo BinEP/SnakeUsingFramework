@@ -1,7 +1,10 @@
 package gameActions;
 
+import java.util.ArrayList;
+
 public abstract class Directions extends Control {
 
+	
 	
 	public Directions() {
 		
@@ -17,7 +20,6 @@ public abstract class Directions extends Control {
 	public abstract void downReleased();
 	public abstract void leftReleased();
 	public abstract void rightReleased();
-	
 	
 	
 	
