@@ -87,6 +87,38 @@ public class Control extends JPanel implements Screen {
 
 		up, down, left, right;
 	}
+	
+	/**
+	 * The positions that scores could be on screen to make it easier to position the score
+	 * @author Brady Stoffel
+	 *
+	 */
+	public enum ScoreCoords {
+		
+		top_left (10, 10), 
+		top_middle (Window.WIDTH / 2, 10), 
+		top_right (Window.WIDTH - 10, 10), 
+		middle_left (10, Window.HEIGHT / 2), 
+		middle_middle (Window.WIDTH / 2, Window.HEIGHT / 2), 
+		middle_right (Window.WIDTH - 10, Window.HEIGHT / 2), 
+		bottom_left (10, Window.HEIGHT - 30), 
+		bottom_middle (Window.WIDTH / 2, Window.HEIGHT - 30), 
+		bottom_right (Window.WIDTH - 10, Window.HEIGHT - 30);
+		
+		public int x;
+		public int y;
+		
+		private ScoreCoords(int x, int y) {
+			
+			this.x = x;
+			this.y = y;
+		}
+		
+		public Point getCoords() {
+			return new Point(this.x, this.y);
+			
+		}
+	}
 
 	/**
 	 * keyMap - modify this to change key locations Gets modified when on the
@@ -124,6 +156,10 @@ public class Control extends JPanel implements Screen {
 	public Timer timer;
 	public int origSpeed = movementVar;
 	public double speed = origSpeed;
+	/**
+	 * If you want to game to speed up as the score gets higher
+	 */
+	public boolean speedUp = false;
 
 	public int score;
 	public Character letter;
@@ -489,6 +525,8 @@ public class Control extends JPanel implements Screen {
 
 			sub.moves();
 
+			if (speedUp) timer.setDelay(1000 / score);
+			
 			if (sub.checkIfDead()) {
 
 				playing = false;
