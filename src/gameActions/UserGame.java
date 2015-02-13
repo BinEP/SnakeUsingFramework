@@ -54,6 +54,7 @@ public class UserGame extends Directions implements PlayerInterface {
 	public UserGame() {
 
 		super();
+		speedUp = true;
 	}
 
 	/**
@@ -91,7 +92,9 @@ public class UserGame extends Directions implements PlayerInterface {
 			r.draw(g);
 		}
 		g.setColor(Color.WHITE);
+		
 		CenteredText.draw(String.valueOf(score), 450, g, 40);
+		ScoreCoords.bottom_middle.draw(String.valueOf(score), g);
 
 	}
 
