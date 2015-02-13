@@ -27,7 +27,7 @@
 <key>NSHumanReadableCopyright</key>
 <string></string>
 <key>JVMMainClassName</key>
-<string>gameActions/Runner</string>
+<string>gameActions.Runner</string>
 <key>JVMOptions</key>
 <array>
 </array>
