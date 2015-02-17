@@ -1,5 +1,6 @@
 package gameActions;
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -546,6 +547,8 @@ public class Control extends JPanel implements Screen {
 		width = getWidth();
 		height = getHeight();
 		
+		
+		
 		sub.alwaysExecute();
 		
 		if (playing) {
@@ -747,5 +750,8 @@ public class Control extends JPanel implements Screen {
 		}
 
 	}
+	
+	
+	
 
 }
