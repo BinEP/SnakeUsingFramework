@@ -46,10 +46,12 @@ public class UserGame extends Directions implements PlayerInterface {
 			Color.ORANGE, Color.WHITE };
 	public ArrayList<CustomRectangle> snakeBody = new ArrayList<CustomRectangle>();
 	public ArrayList<CustomRectangle> fruits = new ArrayList<CustomRectangle>();
-	public Rectangle outerbox = new Rectangle(0, 0, 499, 477);
-	public Rectangle boundary = new Rectangle(18, 18, 466, 452);
+	public Rectangle outerbox = new Rectangle(0, 0, width - 1, height - 2);
+	public Rectangle boundary = new Rectangle(18, 18, width - 8 - 20, height - 8 - 20);
 	public int initialBodySize = 4;
 	public int numOfFruits = 4;
+	public int playingWidth = (width - 8 - 20) - ((width - 8 - 20) % 10) - 10;
+//	public int playingHeight = height - 8 - 20;
 
 	public UserGame() {
 
@@ -193,7 +195,7 @@ public class UserGame extends Directions implements PlayerInterface {
 
 	public int randNum() {
 
-		return ((int) (Math.random() * 45)) * 10 + 10;
+		return ((int) (Math.random() * (playingWidth / 10))) * 10 + 10;
 	}
 
 	public Color randColor() {
@@ -283,6 +285,23 @@ public class UserGame extends Directions implements PlayerInterface {
 	public void rightReleased() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void setPlayingBoundaries() {
+		
+		playingWidth = (width - 8 - 20) - (width - 8 - 20) % 10 - 10;
+		
+		outerbox.setBounds(0, 0, width - 1, height - 2);
+		boundary.setBounds(18, 18, width - 8 - 20, height - 8 - 20);
+		
+//		playingHeight = height - 8 - 20;
+		
+	}
+
+	@Override
+	public void alwaysExecute() {
+		// TODO Auto-generated method stub
+		setPlayingBoundaries();
 	}
 
 }

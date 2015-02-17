@@ -51,7 +51,7 @@ public class Control extends JPanel implements Screen {
 	 */
 	public boolean highScores = false;
 
-	public boolean showMouseCoords = false;
+	public boolean showMouseCoords = true;
 
 	/**
 	 * The value for the upKey This can be changed to suit the user of player
@@ -78,6 +78,9 @@ public class Control extends JPanel implements Screen {
 	public boolean downPressed = false;
 	public boolean leftPressed = false;
 	public boolean rightPressed = false;
+	
+	public int width = Window.WIDTH;
+	public int height = Window.HEIGHT - 20;
 
 	/**
 	 * Set to true if only one direction per frame
@@ -540,6 +543,11 @@ public class Control extends JPanel implements Screen {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
+		width = getWidth();
+		height = getHeight();
+		
+		sub.alwaysExecute();
+		
 		if (playing) {
 
 			if (nextDirection.size() > 0 && singleDirection)
