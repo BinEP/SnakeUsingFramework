@@ -19,7 +19,7 @@ public class Window {
 	public static final int HEIGHT = 500;
 	
 	public static final boolean ALWAYS_ON_TOP = false;
-	public static final boolean RESIZEABLE = false;
+	public static final boolean RESIZEABLE = true;
 	
 	
 	public static final String FONT_NAME = "Joystix";

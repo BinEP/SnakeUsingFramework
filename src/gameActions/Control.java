@@ -83,7 +83,7 @@ public class Control extends JPanel implements Screen {
 	public boolean rightPressed = false;
 	
 	public int width = Window.WIDTH;
-	public int height = Window.HEIGHT - 20;
+	public int height = Window.HEIGHT + 20;
 
 	/**
 	 * Set to true if only one direction per frame
@@ -251,7 +251,7 @@ public class Control extends JPanel implements Screen {
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D) g;
-		g2.scale(width / Window.WIDTH, height / Window.HEIGHT);
+		g2.scale((double) width / (double) Window.WIDTH, (double) (height - 20) / (double) Window.HEIGHT);
 		
 		
 		sub.draw(g2);
