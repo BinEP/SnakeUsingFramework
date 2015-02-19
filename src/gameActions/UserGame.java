@@ -3,7 +3,7 @@ package gameActions;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class UserGame extends Directions implements PlayerInterface {
 	/*
 	 * You can override these methods to customize actions
 	 * 
-	 * drawStart(Graphics g) drawPlaying(Graphics g) drawPaused(Graphics g)
-	 * drawEnd(Graphics g) up() down() left() right() upReleased()
+	 * drawStart(Graphics2D g) drawPlaying(Graphics2D g) drawPaused(Graphics2D g)
+	 * drawEnd(Graphics2D g) up() down() left() right() upReleased()
 	 * downReleased() rightReleased() leftReleased()
 	 */
 
@@ -65,7 +65,7 @@ public class UserGame extends Directions implements PlayerInterface {
 	 * statements so that it only drawn when that is true
 	 * 
 	 */
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 
 		g.setColor(Color.WHITE);
 		Graphics2D g2 = (Graphics2D) g;
@@ -82,7 +82,7 @@ public class UserGame extends Directions implements PlayerInterface {
 	 * what is in here. Gets called when the screen in repainted
 	 */
 	@Override
-	public void drawPlaying(Graphics g) {
+	public void drawPlaying(Graphics2D g) {
 
 		for (CustomRectangle r : snakeBody) {
 			r.draw(g);
@@ -301,6 +301,7 @@ public class UserGame extends Directions implements PlayerInterface {
 	public void alwaysExecute() {
 		// TODO Auto-generated method stub
 		setPlayingBoundaries();
+		
 	}
 
 }

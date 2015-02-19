@@ -1,7 +1,7 @@
 package customClasses;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class CustomRectangle extends Rectangle {
@@ -15,7 +15,7 @@ public class CustomRectangle extends Rectangle {
 
 	}
 
-	public void draw(Graphics g, boolean blackBorder) {
+	public void draw(Graphics2D g, boolean blackBorder) {
 
 		g.setColor(color);
 		g.fillRect(x, y, width, height);
@@ -26,7 +26,7 @@ public class CustomRectangle extends Rectangle {
 
 	}
 
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 
 		draw(g, true);
 

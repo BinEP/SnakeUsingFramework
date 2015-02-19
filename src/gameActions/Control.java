@@ -4,7 +4,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -129,7 +130,7 @@ public class Control extends JPanel implements Screen {
 		 * @param text
 		 * @param g
 		 */
-		public void draw(String text, Graphics g) {
+		public void draw(String text, Graphics2D g) {
 			
 			
 			FontMetrics fontInfo = g.getFontMetrics();
@@ -244,18 +245,23 @@ public class Control extends JPanel implements Screen {
 	 * the user has not defined a custom method, a default one is drawn
 	 * 
 	 */
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics2D g) {
 
 		super.paintComponent(g);
-		sub.draw(g);
+		
+		Graphics2D g2 = (Graphics2D) g;
+		g2.scale(width / Window.WIDTH, height / Window.HEIGHT);
+		
+		
+		sub.draw(g2);
 
 		if (startGame) {
 
-			sub.drawStart(g);
+			sub.drawStart(g2);
 
 		} else if (playing || paused) {
 
-			sub.drawPlaying(g);
+			sub.drawPlaying(g2);
 
 			if (showMouseCoords) {
 				Point mouse = MouseInfo.getPointerInfo().getLocation();
@@ -267,21 +273,21 @@ public class Control extends JPanel implements Screen {
 			}
 			if (paused) {
 
-				sub.drawPaused(g);
+				sub.drawPaused(g2);
 
 			}
 
 		} else if (endGame) {
 
-			drawEnd(g);
+			drawEnd(g2);
 
 		} else if (nameEnter) {
 
-			ScoreInfo.enterName(g, score, pName);
+			ScoreInfo.enterName(g2, score, pName);
 
 		} else if (highScores) {
 
-			ScoreInfo.drawScores(g, GameInfo.TXT_FILE);
+			ScoreInfo.drawScores(g2, GameInfo.TXT_FILE);
 
 		}
 
@@ -292,7 +298,7 @@ public class Control extends JPanel implements Screen {
 	 * 
 	 * @param g
 	 */
-	public void drawStart(Graphics g) {
+	public void drawStart(Graphics2D g) {
 
 		g.setColor(Color.WHITE);
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.TITLE_SIZE));
@@ -316,7 +322,7 @@ public class Control extends JPanel implements Screen {
 	 * @param g
 	 */
 
-	public void drawPlaying(Graphics g) {
+	public void drawPlaying(Graphics2D g) {
 
 		g.setColor(Color.CYAN);
 		g.fillRect(20, 30, playerX, playerY);
@@ -328,7 +334,7 @@ public class Control extends JPanel implements Screen {
 	 * 
 	 * @param g
 	 */
-	public void drawPaused(Graphics g) {
+	public void drawPaused(Graphics2D g) {
 
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.PAUSE_SIZE));
 		g.setColor(Color.WHITE);
@@ -341,7 +347,7 @@ public class Control extends JPanel implements Screen {
 	 * 
 	 * @param g
 	 */
-	public void drawEnd(Graphics g) {
+	public void drawEnd(Graphics2D g) {
 
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.END_SCORE_SIZE));
 		g.setColor(Color.WHITE);
