@@ -300,7 +300,7 @@ public class UserGame extends Directions implements PlayerInterface {
 
 	public void alwaysExecute() {
 		// TODO Auto-generated method stub
-		setPlayingBoundaries();
+//		setPlayingBoundaries();
 		
 	}
 

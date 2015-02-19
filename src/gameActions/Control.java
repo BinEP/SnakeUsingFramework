@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
@@ -245,7 +246,7 @@ public class Control extends JPanel implements Screen {
 	 * the user has not defined a custom method, a default one is drawn
 	 * 
 	 */
-	public void paintComponent(Graphics2D g) {
+	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
 		
