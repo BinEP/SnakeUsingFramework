@@ -713,6 +713,7 @@ public class Control extends JPanel implements Screen {
 	 */
 	public void addDirection(Direction d) {
 
+		if (nextDirection.size() < 2)
 		nextDirection.add(d);
 
 		// lastDirection = d;
