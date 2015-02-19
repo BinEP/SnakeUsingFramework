@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import customClasses.CustomRectangle;
-import utilityClasses.CenteredText;
+import utilityClasses.*;
 
 public class UserGame extends Directions implements PlayerInterface {
 
@@ -95,7 +95,7 @@ public class UserGame extends Directions implements PlayerInterface {
 		}
 		g.setColor(Color.WHITE);
 		
-		CenteredText.draw(String.valueOf(score), 450, g, 40);
+//		CenteredText.draw(String.valueOf(score), 450, g, 40);
 		ScoreCoords.bottom_middle.draw(String.valueOf(score), g);
 
 	}
@@ -188,7 +188,6 @@ public class UserGame extends Directions implements PlayerInterface {
 
 			snakeBody.add(new CustomRectangle(250, 250 + 10 * i, 10, 10,
 					Color.WHITE));
-
 		}
 
 	}
@@ -211,56 +210,42 @@ public class UserGame extends Directions implements PlayerInterface {
 
 	@Override
 	public void up() {
-		// TODO Auto-generated method stub
+		
 		if (deltaX != 0) {
 
 			deltaX = 0;
 			deltaY = -movementVar;
-
 		}
-		
-//		addDirection(Direction.up);
-
 	}
 
 	@Override
 	public void down() {
-		// TODO Auto-generated method stub
 
 		if (deltaX != 0) {
 
 			deltaX = 0;
 			deltaY = movementVar;
-
 		}
-//		addDirection(Direction.down);
 	}
 
 	@Override
 	public void left() {
-		// TODO Auto-generated method stub
 
 		if (deltaY != 0) {
 
 			deltaY = 0;
 			deltaX = -movementVar;
-
 		}
-//		addDirection(Direction.left);
-
 	}
 
 	@Override
 	public void right() {
-		// TODO Auto-generated method stub
 		if (deltaY != 0) {
 
 			deltaY = 0;
 			deltaX = movementVar;
 
 		}
-//		addDirection(Direction.right);
-
 	}
 
 	@Override
@@ -287,16 +272,16 @@ public class UserGame extends Directions implements PlayerInterface {
 
 	}
 	
-	public void setPlayingBoundaries() {
-		
-		playingWidth = (width - 8 - 20) - (width - 8 - 20) % 10 - 10;
-		
-		outerbox.setBounds(0, 0, width - 1, height - 2);
-		boundary.setBounds(18, 18, width - 8 - 20, height - 8 - 20);
-		
+//	public void setPlayingBoundaries() {
+//		
+//		playingWidth = (width - 8 - 20) - (width - 8 - 20) % 10 - 10;
+//		
+//		outerbox.setBounds(0, 0, width - 1, height - 2);
+//		boundary.setBounds(18, 18, width - 8 - 20, height - 8 - 20);
+//		
 //		playingHeight = height - 8 - 20;
-		
-	}
+//		
+//	}
 
 	public void alwaysExecute() {
 		// TODO Auto-generated method stub

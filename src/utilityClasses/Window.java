@@ -27,6 +27,7 @@ public class Window {
 	public static final int ENTER_TO_START_SIZE = 26;
 	
 	public static final int PAUSE_SIZE = 60;
+	public static final int SCORE_SIZE = 40;
 	
 	public static final int YOU_WIN_SIZE = 60;
 	public static final int SCORE_LIST_SIZE = 17;

@@ -54,7 +54,7 @@ public class Control extends JPanel implements Screen {
 	 */
 	public boolean highScores = false;
 
-	public boolean showMouseCoords = true;
+	public boolean showMouseCoords = false;
 
 	/**
 	 * The value for the upKey This can be changed to suit the user of player
@@ -85,6 +85,8 @@ public class Control extends JPanel implements Screen {
 	public int width = Window.WIDTH;
 	public int height = Window.HEIGHT + 20;
 
+	public static String fontFile = GameInfo.FONT_FILE;
+	public static CustomFont customFont = new CustomFont(fontFile, Font.BOLD, 18);
 	/**
 	 * Set to true if only one direction per frame
 	 */
@@ -108,9 +110,9 @@ public class Control extends JPanel implements Screen {
 		middle_left (10, Window.HEIGHT / 2), 
 		middle_middle (Window.WIDTH / 2, Window.HEIGHT / 2), 
 		middle_right (Window.WIDTH - 10, Window.HEIGHT / 2), 
-		bottom_left (10, Window.HEIGHT - 50), 
-		bottom_middle (Window.WIDTH / 2, Window.HEIGHT - 50), 
-		bottom_right (Window.WIDTH - 10, Window.HEIGHT - 50);
+		bottom_left (10, Window.HEIGHT), 
+		bottom_middle (Window.WIDTH / 2, Window.HEIGHT), 
+		bottom_right (Window.WIDTH - 10, Window.HEIGHT);
 		
 		public int x;
 		public int y;
@@ -133,6 +135,7 @@ public class Control extends JPanel implements Screen {
 		 */
 		public void draw(String text, Graphics2D g) {
 			
+			g.setFont(CustomFont.makeCustomFont(GameInfo.FONT_FILE, Window.SCORE_SIZE));
 			
 			FontMetrics fontInfo = g.getFontMetrics();
 			int textWidth = fontInfo.stringWidth(text);
@@ -200,9 +203,6 @@ public class Control extends JPanel implements Screen {
 	public double totalTime = 0;
 
 	public ArrayList<Direction> nextDirection = new ArrayList<Direction>();
-
-	public String fontFile = GameInfo.FONT_FILE;
-	public CustomFont customFont = new CustomFont(fontFile, Font.BOLD, 18);
 
 	public UserGame sub = (UserGame) this;
 
