@@ -21,6 +21,9 @@ import javax.swing.Timer;
 import utilityClasses.*;
 import gameFolder.*;
 
+/**
+ * @author Brady Stoffel
+ */
 public class Control extends JPanel implements Screen {
 
 	/**
@@ -58,22 +61,18 @@ public class Control extends JPanel implements Screen {
 
 	/**
 	 * The value for the upKey This can be changed to suit the user of player
-	 * 
 	 */
 	public int upKey = KeyEvent.VK_UP;
 	/**
 	 * The value for the downKey This can be changed to suit the user of player
-	 * 
 	 */
 	public int downKey = KeyEvent.VK_DOWN;
 	/**
 	 * The value for the leftKey This can be changed to suit the user of player
-	 * 
 	 */
 	public int leftKey = KeyEvent.VK_LEFT;
 	/**
 	 * The value for the rightKey This can be changed to suit the user of player
-	 * 
 	 */
 	public int rightKey = KeyEvent.VK_RIGHT;
 
@@ -89,18 +88,17 @@ public class Control extends JPanel implements Screen {
 	public static CustomFont customFont = new CustomFont(fontFile, Font.BOLD, 18);
 	/**
 	 * Set to true if only one direction per frame
+	 * @author Brady Stoffel
 	 */
 	public boolean singleDirection = true;
 
 	public enum Direction {
-
 		up, down, left, right;
 	}
 	
 	/**
 	 * The positions that scores could be on screen to make it easier to position the score
 	 * @author Brady Stoffel
-	 *
 	 */
 	public enum ScoreCoords {
 		
@@ -125,7 +123,6 @@ public class Control extends JPanel implements Screen {
 		
 		public Point getCoords() {
 			return new Point(this.x, this.y);
-			
 		}
 		
 		/**
@@ -151,7 +148,6 @@ public class Control extends JPanel implements Screen {
 				
 				g.drawString(text, x - textWidth, y + textHeight / 2);
 			}
-			
 		}
 	}
 
@@ -215,15 +211,12 @@ public class Control extends JPanel implements Screen {
 		sub.setup();
 
 		timer = new Timer((int) (1000 / speed), this);
-		// reset();
 		timer.start();
-
 	}
 
 	public void setBackgroundColor(Color c) {
 
 		this.setBackground(c);
-
 	}
 
 	/**
@@ -236,7 +229,6 @@ public class Control extends JPanel implements Screen {
 		rightKey = keyMap[1];
 		downKey = keyMap[2];
 		leftKey = keyMap[3];
-
 	}
 
 	/**
@@ -244,7 +236,6 @@ public class Control extends JPanel implements Screen {
 	 * startGame, endGame, etc. to know what to paint. Attempts to call methods
 	 * in the UserGame class, which override methods in this class so that is
 	 * the user has not defined a custom method, a default one is drawn
-	 * 
 	 */
 	public void paintComponent(Graphics g) {
 
@@ -252,7 +243,6 @@ public class Control extends JPanel implements Screen {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.scale((double) width / (double) Window.WIDTH, (double) (height - 20) / (double) Window.HEIGHT);
-		
 		
 		sub.draw(g2);
 
@@ -270,14 +260,11 @@ public class Control extends JPanel implements Screen {
 
 				g.drawString("" + (mouse.x - screen.x) + "  "
 						+ (mouse.y - screen.y), 20, 80);
-
 			}
 			if (paused) {
 
 				sub.drawPaused(g2);
-
 			}
-
 		} else if (endGame) {
 
 			drawEnd(g2);
@@ -285,13 +272,11 @@ public class Control extends JPanel implements Screen {
 		} else if (nameEnter) {
 
 			ScoreInfo.enterName(g2, score, pName);
-
+			
 		} else if (highScores) {
 
 			ScoreInfo.drawScores(g2, GameInfo.TXT_FILE);
-
 		}
-
 	}
 
 	/**
@@ -314,7 +299,6 @@ public class Control extends JPanel implements Screen {
 
 		CenteredText.draw("Press keys Up, Right, Down, Left to map new keys",
 				30, g);
-
 	}
 
 	/**
@@ -327,7 +311,6 @@ public class Control extends JPanel implements Screen {
 
 		g.setColor(Color.CYAN);
 		g.fillRect(20, 30, playerX, playerY);
-
 	}
 
 	/**
@@ -340,7 +323,6 @@ public class Control extends JPanel implements Screen {
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.PAUSE_SIZE));
 		g.setColor(Color.WHITE);
 		CenteredText.draw("Paused", Window.PAUSE_Y, g);
-
 	}
 
 	/**
@@ -361,7 +343,6 @@ public class Control extends JPanel implements Screen {
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.RESTART_SIZE));
 
 		CenteredText.draw("Enter to Restart", Window.RESTART_Y, g);
-
 	}
 
 	/**
@@ -371,7 +352,6 @@ public class Control extends JPanel implements Screen {
 	public void startTime() {
 
 		startTime = System.currentTimeMillis();
-
 	}
 
 	/**
@@ -381,18 +361,16 @@ public class Control extends JPanel implements Screen {
 
 		totalTime += System.currentTimeMillis() - startTime;
 		startTime = System.currentTimeMillis();
-
 	}
 
 	/**
 	 * gets the number of seconds that have passed since the timer was started
 	 * 
-	 * @return
+	 * @return int
 	 */
 	public int getTime() {
 
 		return (int) ((totalTime + System.currentTimeMillis() - startTime) / 1000);
-
 	}
 
 	/**
@@ -404,10 +382,7 @@ public class Control extends JPanel implements Screen {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -452,7 +427,7 @@ public class Control extends JPanel implements Screen {
 				sub.right();
 			}
 
-		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		} else if (e.getKeyCode() == KeyEvent.VK_ENTER && !(paused || playing)) {
 
 			if (startGame) {
 
@@ -487,7 +462,6 @@ public class Control extends JPanel implements Screen {
 			} else {
 				startGame = false;
 				playing = true;
-
 			}
 
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && (playing || paused)) {
@@ -495,13 +469,6 @@ public class Control extends JPanel implements Screen {
 			playing = !playing;
 			paused = !paused;
 
-			if (timer.isRunning()) {
-				// timer.stop();
-				// stopTime();
-			} else {
-				// timer.start();
-				// startTime();
-			}
 			repaint();
 
 		} else if (e.getKeyLocation() == KeyEvent.KEY_LOCATION_STANDARD
@@ -513,14 +480,11 @@ public class Control extends JPanel implements Screen {
 				letter = Character.toUpperCase(letter);
 				pName = pName.concat(letter.toString());
 			}
-
 		}
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 		if (e.getKeyCode() == upKey) {
 
@@ -529,7 +493,7 @@ public class Control extends JPanel implements Screen {
 		} else if (e.getKeyCode() == downKey) {
 
 			sub.downReleased();
-
+			
 		} else if (e.getKeyCode() == leftKey) {
 
 			sub.leftReleased();
@@ -537,9 +501,7 @@ public class Control extends JPanel implements Screen {
 		} else if (e.getKeyCode() == rightKey) {
 
 			sub.rightReleased();
-
 		}
-
 	}
 
 	/**
@@ -549,25 +511,16 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 
 		width = getWidth();
 		height = getHeight();
-		
-		
 		
 		sub.alwaysExecute();
 		
 		if (playing) {
 
-			if (nextDirection.size() > 0 && singleDirection)
-				executeDirection();
+			if (nextDirection.size() > 0 && singleDirection) executeDirection();
 			
-			// if (upPressed) up();
-			// if (downPressed) down();
-			// if (leftPressed) left();
-			// if (rightPressed) right();
-
 			sub.moves();
 
 			if (speedUp) timer.setDelay(1000 / (int) ( speed + score / 2));
@@ -576,54 +529,32 @@ public class Control extends JPanel implements Screen {
 
 				playing = false;
 				nameEnter = true;
-
 			}
 		}
-
 		repaint();
-
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	/**
 	 * What to set variables to when upKey is pressed. Called by keyPressed
 	 */
 	@Override
 	public void up() {
-		// TODO Auto-generated method stub
-
-		// deltaY = -movementVar;
 		upPressed = true;
-
 	}
 
 	/**
@@ -631,11 +562,7 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void down() {
-		// TODO Auto-generated method stub
-
-		// deltaY = movementVar;
 		downPressed = true;
-
 	}
 
 	/**
@@ -643,10 +570,7 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void left() {
-		// TODO Auto-generated method stub
-		// deltaX = -movementVar;
 		leftPressed = true;
-
 	}
 
 	/**
@@ -654,11 +578,7 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void right() {
-		// TODO Auto-generated method stub
-
-		// deltaX = movementVar;
 		rightPressed = true;
-
 	}
 
 	/**
@@ -666,8 +586,6 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void upReleased() {
-		// TODO Auto-generated method stub
-		// deltaY = 0;
 		upPressed = false;
 	}
 
@@ -676,8 +594,6 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void downReleased() {
-		// TODO Auto-generated method stub
-		// deltaY = 0;
 		downPressed = false;
 	}
 
@@ -686,8 +602,6 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void leftReleased() {
-		// TODO Auto-generated method stub
-		// deltaX = 0;
 		leftPressed = false;
 	}
 
@@ -696,8 +610,6 @@ public class Control extends JPanel implements Screen {
 	 */
 	@Override
 	public void rightReleased() {
-		// TODO Auto-generated method stub
-		// deltaX = 0;
 		rightPressed = false;
 	}
 
@@ -708,9 +620,7 @@ public class Control extends JPanel implements Screen {
 	 * @param size
 	 */
 	public Font getFont(int size) {
-
 		return customFont.getFont(size);
-
 	}
 
 	/**
@@ -720,11 +630,9 @@ public class Control extends JPanel implements Screen {
 	 */
 	public void addDirection(Direction d) {
 
-		if (nextDirection.size() < 2)
-		nextDirection.add(d);
-
-		// lastDirection = d;
-
+		if (singleDirection) {
+			if (nextDirection.size() < 2) nextDirection.add(d);
+		}
 	}
 
 	/**
@@ -736,30 +644,39 @@ public class Control extends JPanel implements Screen {
 		nextDirection.remove(0);
 
 		switch (d) {
-
+		
 		case up:
-
 			sub.up();
-
 			break;
+			
 		case down:
 			sub.down();
-
 			break;
+			
 		case left:
-
 			sub.left();
-
 			break;
+			
 		case right:
-
 			sub.right();
-
 		}
-
 	}
 	
+	public Direction getDirection(int keyCode) {
+		
+		if (keyCode == upKey) {
+			return Direction.up;
+			
+		} else if (keyCode == downKey) {
+			return Direction.down;
+			
+		} else if (keyCode == leftKey) {
+			return Direction.left;
+			
+		} else {
+			return Direction.right;
+		}
+	}
 	
-	
-
+	public void alwaysExecute() {}
 }

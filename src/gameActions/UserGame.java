@@ -13,30 +13,36 @@ import javax.swing.Timer;
 import customClasses.CustomRectangle;
 import utilityClasses.*;
 
+
+/**
+ * @author Brady Stoffel
+ */
 public class UserGame extends Directions implements PlayerInterface {
 
 	/*
 	 * To force implement of direction methods, have UserGame extend the
 	 * Directions class It force the methods to be extended
-	 */
-
-	/*
-	 * int deltaX int deltaY int movementVar
+	 * 
+	 * int deltaX 
+	 * int deltaY 
+	 * int movementVar
 	 * 
 	 * int playerX int playerY
 	 * 
-	 * boolean startGame boolean playing boolean endGame boolean nameEnter
+	 * boolean startGame 
+	 * boolean playing 
+	 * boolean endGame 
+	 * boolean nameEnter
 	 * boolean highScores
 	 * 
 	 * boolean singleDirection only executes one direction per frame
-	 */
-
-	/*
+	 * 
 	 * You can override these methods to customize actions
 	 * 
-	 * drawStart(Graphics2D g) drawPlaying(Graphics2D g) drawPaused(Graphics2D g)
-	 * drawEnd(Graphics2D g) up() down() left() right() upReleased()
-	 * downReleased() rightReleased() leftReleased()
+	 * drawStart(Graphics2D g) 
+	 * drawPlaying(Graphics2D g) 
+	 * drawPaused(Graphics2D g)
+	 * drawEnd(Graphics2D g)
 	 */
 
 	
@@ -51,10 +57,8 @@ public class UserGame extends Directions implements PlayerInterface {
 	public int initialBodySize = 4;
 	public int numOfFruits = 4;
 	public int playingWidth = (width - 8 - 20) - ((width - 8 - 20) % 10) - 10;
-//	public int playingHeight = height - 8 - 20;
 
 	public UserGame() {
-
 		super();
 		speedUp = true;
 	}
@@ -63,17 +67,14 @@ public class UserGame extends Directions implements PlayerInterface {
 	 * Used to draw custom graphics on the screen Anything in this method will
 	 * be painted on all screens unless the painting part is inside of if
 	 * statements so that it only drawn when that is true
-	 * 
 	 */
 	public void draw(Graphics2D g) {
 
 		g.setColor(Color.WHITE);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(15));
-		// g2.drawRect(0, 0, 499, 477);
 		g2.drawRect(outerbox.x, outerbox.y, outerbox.width, outerbox.height);
 		g2.setStroke(new BasicStroke(2));
-
 	}
 
 	/**
@@ -86,24 +87,19 @@ public class UserGame extends Directions implements PlayerInterface {
 
 		for (CustomRectangle r : snakeBody) {
 			r.draw(g);
-
 		}
 
 		for (CustomRectangle r : fruits) {
-
 			r.draw(g);
 		}
-		g.setColor(Color.WHITE);
 		
-//		CenteredText.draw(String.valueOf(score), 450, g, 40);
+		g.setColor(Color.WHITE);
 		ScoreCoords.bottom_middle.draw(String.valueOf(score), g);
-
 	}
 
 	/**
 	 * Gets called constantly. Put code here that will modify the player or
 	 * other variables
-	 * 
 	 */
 	public void moves() {
 		
@@ -115,28 +111,22 @@ public class UserGame extends Directions implements PlayerInterface {
 		for (int i = 1; i < snakeBody.size(); i++) {
 
 			CustomRectangle l = snakeBody.get(i);
-
 			snakeBody.get(i - 1).color = l.color;
-
 		}
 
 		boolean fruitOverlap = false;
 		for (CustomRectangle r : fruits) {
 			if (r.intersects(head)) {
-
 				snakeBody.get(snakeBody.size() - 1).color = r.color;
 				score++;
 				newFruit(fruits.indexOf(r));
 				fruitOverlap = true;
-
 			}
-
 		}
 
 		if (!fruitOverlap) {
 			snakeBody.remove(snakeBody.size() - 1);
 		}
-
 	}
 
 	/**
@@ -162,7 +152,6 @@ public class UserGame extends Directions implements PlayerInterface {
 		snakeBody.clear();
 		
 		setup();
-
 	}
 
 	/**
@@ -179,26 +168,21 @@ public class UserGame extends Directions implements PlayerInterface {
 
 			fruits.add(new CustomRectangle(randNum(), randNum(), 10, 10,
 					randColor()));
-
 		}
 
 		head = new CustomRectangle(250, 250, 10, 10, Color.WHITE);
 
 		for (int i = 0; i < initialBodySize; i++) {
-
 			snakeBody.add(new CustomRectangle(250, 250 + 10 * i, 10, 10,
 					Color.WHITE));
 		}
-
 	}
 
 	public int randNum() {
-
 		return ((int) (Math.random() * (playingWidth / 10))) * 10 + 10;
 	}
 
 	public Color randColor() {
-
 		return Colors[(int) (Math.random() * Colors.length)];
 	}
 	
@@ -244,49 +228,19 @@ public class UserGame extends Directions implements PlayerInterface {
 
 			deltaY = 0;
 			deltaX = movementVar;
-
 		}
 	}
 
 	@Override
-	public void upReleased() {
-		// TODO Auto-generated method stub
-
-	}
+	public void upReleased() {}
 
 	@Override
-	public void downReleased() {
-		// TODO Auto-generated method stub
-
-	}
+	public void downReleased() {}
 
 	@Override
-	public void leftReleased() {
-		// TODO Auto-generated method stub
-
-	}
+	public void leftReleased() {}
 
 	@Override
-	public void rightReleased() {
-		// TODO Auto-generated method stub
-
-	}
-	
-//	public void setPlayingBoundaries() {
-//		
-//		playingWidth = (width - 8 - 20) - (width - 8 - 20) % 10 - 10;
-//		
-//		outerbox.setBounds(0, 0, width - 1, height - 2);
-//		boundary.setBounds(18, 18, width - 8 - 20, height - 8 - 20);
-//		
-//		playingHeight = height - 8 - 20;
-//		
-//	}
-
-	public void alwaysExecute() {
-		// TODO Auto-generated method stub
-//		setPlayingBoundaries();
-		
-	}
+	public void rightReleased() {}
 
 }
