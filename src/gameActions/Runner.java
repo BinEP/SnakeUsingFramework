@@ -34,7 +34,7 @@ public class Runner {
 		UserGame game = new UserGame();
 		frame.add(game, BorderLayout.CENTER);
 
-		frame.setSize(Window.WIDTH, Window.HEIGHT);
+		frame.setSize(Window.WIDTH, Window.REAL_HEIGHT);
 		frame.setVisible(true);
 		
 	}
