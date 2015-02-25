@@ -17,7 +17,7 @@ import utilityClasses.*;
 /**
  * @author Brady Stoffel
  */
-public class UserGame extends Directions implements PlayerInterface {
+public class UserGame extends Directions {
 
 	/*
 	 * To force implement of direction methods, have UserGame extend the
@@ -242,5 +242,11 @@ public class UserGame extends Directions implements PlayerInterface {
 
 	@Override
 	public void rightReleased() {}
+
+	@Override
+	public String getGameName() {
+		// TODO Auto-generated method stub
+		return "Snake";
+	}
 
 }

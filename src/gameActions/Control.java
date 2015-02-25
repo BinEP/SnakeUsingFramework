@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import utilityClasses.*;
-import gameFolder.*;
 
 /**
  * @author Brady Stoffel
@@ -83,15 +83,24 @@ public class Control extends JPanel implements Screen {
 	
 	public int width = Window.WIDTH;
 	public int height = Window.HEIGHT;
-
-	public static String fontFile = GameInfo.FONT_FILE;
-	public static CustomFont customFont = new CustomFont(fontFile, Font.BOLD, 18);
+	
+	/**
+	 * Outside box of window
+	 */
+	public Rectangle outerbox = new Rectangle(0, 0, width - 1, height);
+	
+	public static String NAME = "Game Name";
+	public static String TXT_FILE = NAME.toLowerCase().replaceAll("\\s", "");
+	public static String FOLDER_PATH = "InfoFiles/";
+	public static String FONT_FILE = "joystix";
+	
+	public static CustomFont customFont = new CustomFont(FONT_FILE, Font.BOLD, 18);
 	/**
 	 * Set to true if only one direction per frame
 	 * @author Brady Stoffel
 	 */
-	public boolean singleDirection = true;
-
+	public boolean singleDirection = false;
+	
 	public enum Direction {
 		up, down, left, right;
 	}
@@ -132,7 +141,7 @@ public class Control extends JPanel implements Screen {
 		 */
 		public void draw(String text, Graphics2D g) {
 			
-			g.setFont(CustomFont.makeCustomFont(GameInfo.FONT_FILE, Window.SCORE_SIZE));
+			g.setFont(CustomFont.makeCustomFont(FONT_FILE, Window.SCORE_SIZE));
 			
 			FontMetrics fontInfo = g.getFontMetrics();
 			int textWidth = fontInfo.stringWidth(text);
@@ -185,7 +194,7 @@ public class Control extends JPanel implements Screen {
 	public int playerY;
 
 	public Timer timer;
-	public int origSpeed = movementVar;
+	public int origSpeed = 60;
 	public double speed = origSpeed;
 	/**
 	 * If you want to game to speed up as the score gets higher
@@ -200,7 +209,8 @@ public class Control extends JPanel implements Screen {
 
 	public ArrayList<Direction> nextDirection = new ArrayList<Direction>();
 
-	public UserGame sub = (UserGame) this;
+//	public UserGame sub = (UserGame) this;
+
 
 	public Control() {
 
@@ -208,10 +218,20 @@ public class Control extends JPanel implements Screen {
 		setFocusable(true);
 		addKeyListener(this);
 
-		sub.setup();
+		NAME = getGameName();
+		TXT_FILE = NAME.toLowerCase().replaceAll("\\s", "");
+		FOLDER_PATH = getFolderPath();
+		FONT_FILE = getFontFile();
+		
+		setup();
 
 		timer = new Timer((int) (1000 / speed), this);
 		timer.start();
+	}
+	
+	public void setSpeed(int speed) {
+		this.speed = speed;
+		timer.setDelay(1000 / speed);
 	}
 
 	public void setBackgroundColor(Color c) {
@@ -243,16 +263,16 @@ public class Control extends JPanel implements Screen {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.scale((double) width / (double) Window.WIDTH, (double) (height) / (double) Window.HEIGHT);
-		
-		sub.draw(g2);
+		g.setColor(Color.WHITE);
+		draw(g2);
 
 		if (startGame) {
 
-			sub.drawStart(g2);
+			drawStart(g2);
 
 		} else if (playing || paused) {
 
-			sub.drawPlaying(g2);
+			drawPlaying(g2);
 
 			if (showMouseCoords) {
 				Point mouse = MouseInfo.getPointerInfo().getLocation();
@@ -263,7 +283,7 @@ public class Control extends JPanel implements Screen {
 			}
 			if (paused) {
 
-				sub.drawPaused(g2);
+				drawPaused(g2);
 			}
 		} else if (endGame) {
 
@@ -271,12 +291,16 @@ public class Control extends JPanel implements Screen {
 
 		} else if (nameEnter) {
 
-			ScoreInfo.enterName(g2, score, pName);
+			ScoreInfo.enterName(g2, getScore(), pName);
 			
 		} else if (highScores) {
 
-			ScoreInfo.drawScores(g2, GameInfo.TXT_FILE);
+			ScoreInfo.drawScores(g2, TXT_FILE, FOLDER_PATH);
 		}
+	}
+	
+	public void draw(Graphics2D g) {
+		
 	}
 
 	/**
@@ -288,7 +312,7 @@ public class Control extends JPanel implements Screen {
 
 		g.setColor(Color.WHITE);
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.TITLE_SIZE));
-		CenteredText.draw(GameInfo.NAME, Window.TITLE_Y, g);
+		CenteredText.draw(NAME, Window.TITLE_Y, g);
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD,
 				Window.ENTER_TO_START_SIZE));
 
@@ -334,7 +358,7 @@ public class Control extends JPanel implements Screen {
 
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.END_SCORE_SIZE));
 		g.setColor(Color.WHITE);
-		CenteredText.draw(String.valueOf(score), Window.END_SCORE_Y, g);
+		CenteredText.draw(String.valueOf(getScore()), Window.END_SCORE_Y, g);
 
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.YOU_LOSE_SIZE));
 
@@ -343,6 +367,14 @@ public class Control extends JPanel implements Screen {
 		g.setFont(new Font(Window.FONT_NAME, Font.BOLD, Window.RESTART_SIZE));
 
 		CenteredText.draw("Enter to Restart", Window.RESTART_Y, g);
+	}
+	
+	public void setup() {
+		
+	}
+	
+	public void reset() {
+		
 	}
 
 	/**
@@ -388,19 +420,21 @@ public class Control extends JPanel implements Screen {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 
+		
 		if (startGame && e.getKeyCode() != KeyEvent.VK_ENTER) {
 
 			keyMap[keyIndex] = e.getKeyCode();
 			keyIndex++;
 			if (keyIndex > 3)
 				keyIndex = 0;
+			
 
 		} else if (e.getKeyCode() == upKey) {
 
 			if (singleDirection) {
 				addDirection(Direction.up);
 			} else {
-				sub.up();
+				up();
 			}
 
 		} else if (e.getKeyCode() == downKey) {
@@ -408,7 +442,7 @@ public class Control extends JPanel implements Screen {
 			if (singleDirection) {
 				addDirection(Direction.down);
 			} else {
-				sub.down();
+				down();
 			}
 
 		} else if (e.getKeyCode() == leftKey) {
@@ -416,7 +450,7 @@ public class Control extends JPanel implements Screen {
 			if (singleDirection) {
 				addDirection(Direction.left);
 			} else {
-				sub.left();
+				left();
 			}
 
 		} else if (e.getKeyCode() == rightKey) {
@@ -424,7 +458,7 @@ public class Control extends JPanel implements Screen {
 			if (singleDirection) {
 				addDirection(Direction.right);
 			} else {
-				sub.right();
+				right();
 			}
 
 		} else if (e.getKeyCode() == KeyEvent.VK_ENTER && !(paused || playing)) {
@@ -433,14 +467,15 @@ public class Control extends JPanel implements Screen {
 
 				playing = true;
 				startGame = false;
+				
 				setKeys();
-				startTime();
-				sub.setup();
+				resetTime();
+				setup();
 
 			} else if (endGame) {
 
 				speed = origSpeed;
-				sub.reset();
+				reset();
 				stopTime();
 				startGame = false;
 				playing = true;
@@ -454,7 +489,7 @@ public class Control extends JPanel implements Screen {
 			} else if (nameEnter) {
 				nameEnter = false;
 				highScores = true;
-				ScoreInfo.setScores(score, pName, GameInfo.TXT_FILE);
+				ScoreInfo.setScores(getScore(), pName, TXT_FILE, FOLDER_PATH);
 			} else if (highScores) {
 
 				highScores = false;
@@ -466,9 +501,15 @@ public class Control extends JPanel implements Screen {
 
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && (playing || paused)) {
 
+			if (playing) {
+				stopTime();
+			} else {
+				startTime();
+			}
+			
 			playing = !playing;
 			paused = !paused;
-
+			
 			repaint();
 
 		} else if (e.getKeyLocation() == KeyEvent.KEY_LOCATION_STANDARD
@@ -481,27 +522,31 @@ public class Control extends JPanel implements Screen {
 				pName = pName.concat(letter.toString());
 			}
 		}
+		customPressed(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 
+		
 		if (e.getKeyCode() == upKey) {
 
-			sub.upReleased();
+			upReleased();
 
 		} else if (e.getKeyCode() == downKey) {
 
-			sub.downReleased();
+			downReleased();
 			
 		} else if (e.getKeyCode() == leftKey) {
 
-			sub.leftReleased();
+			leftReleased();
 
 		} else if (e.getKeyCode() == rightKey) {
 
-			sub.rightReleased();
+			rightReleased();
 		}
+		
+		customReleased(e);
 	}
 
 	/**
@@ -514,19 +559,19 @@ public class Control extends JPanel implements Screen {
 
 		width = getWidth();
 		height = getHeight();
-		System.out.println("width: " + width + "\t height: " + height);
+//		System.out.println("width: " + width + "\t height: " + height);
 		
-		sub.alwaysExecute();
+		alwaysExecute();
 		
 		if (playing) {
 
 			if (nextDirection.size() > 0 && singleDirection) executeDirection();
 			
-			sub.moves();
+			moves();
 
-			if (speedUp) timer.setDelay(1000 / (int) ( speed + score / 2));
+			if (speedUp) timer.setDelay(1000 / (int) ( speed + getScore() / 2));
 			
-			if (sub.checkIfDead()) {
+			if (checkIfDead()) {
 
 				playing = false;
 				nameEnter = true;
@@ -535,20 +580,55 @@ public class Control extends JPanel implements Screen {
 		repaint();
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {}
+	public boolean checkIfDead() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void moves() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+		clicked(e);
+		repaint();
+	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+		pressed(e);
+		repaint();
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {
+		released(e);
+		repaint();
+	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+		enters(e);
+		repaint();
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		exits(e);
+		repaint();
+	}
+	
+	public void clicked(MouseEvent e) {}
+	
+	public void pressed(MouseEvent e) {}
+	
+	public void released(MouseEvent e) {}
+	
+	public void enters(MouseEvent e) {}
+	
+	public void exits(MouseEvent e) {}
 
 	/**
 	 * What to set variables to when upKey is pressed. Called by keyPressed
@@ -613,6 +693,18 @@ public class Control extends JPanel implements Screen {
 	public void rightReleased() {
 		rightPressed = false;
 	}
+	
+	public void customPressed(KeyEvent e) {
+		
+		
+		
+	}
+	
+public void customReleased(KeyEvent e) {
+		
+		
+		
+	}
 
 	/**
 	 * Sets the graphics font at the given size
@@ -647,19 +739,19 @@ public class Control extends JPanel implements Screen {
 		switch (d) {
 		
 		case up:
-			sub.up();
+			up();
 			break;
 			
 		case down:
-			sub.down();
+			down();
 			break;
 			
 		case left:
-			sub.left();
+			left();
 			break;
 			
 		case right:
-			sub.right();
+			right();
 		}
 	}
 	
@@ -680,4 +772,23 @@ public class Control extends JPanel implements Screen {
 	}
 	
 	public void alwaysExecute() {}
+
+	public String getGameName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getFolderPath() {
+		// TODO Auto-generated method stub
+		return "InfoFiles/";
+	}
+
+	public String getFontFile() {
+		// TODO Auto-generated method stub
+		return "joystix";
+	}
+	
+	public int getScore() {
+		return score;
+	}
 }
